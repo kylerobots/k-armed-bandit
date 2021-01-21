@@ -72,10 +72,10 @@ class TestStaticBandit(unittest.TestCase):
             reward = bandit.select(i)
             self.assertEqual(reward, rewards[i])
         # Additionally, incorrect inputs should be rejected.
-        for i in (-1, 0, 4, 0.5, '1', None (1, 2, 3)):
+        for i in (-1, 3, 4, 0.5, '1', None, (1, 2, 3)):
+            rewards = bandit.trueValues()
             with self.assertRaises(ValueError):
                 reward = bandit.select(i)
-        pass
 
 
 if __name__ == '__main__':
