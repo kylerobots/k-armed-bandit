@@ -21,6 +21,7 @@ class TestStaticBandit(unittest.TestCase):
             self.assertIsNotNone(bandit)
         # k can't be changed once set
         with self.assertRaises(AttributeError):
+            bandit = Static(3, None)
             bandit.k = 5
         # These should all fail
         for k in (0, -1, 0.5, '1', 'the', None):
