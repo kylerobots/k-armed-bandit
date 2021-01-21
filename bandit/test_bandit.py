@@ -19,6 +19,9 @@ class TestStaticBandit(unittest.TestCase):
         for k in (1, 2, 100):
             bandit = Static(k, None)
             self.assertIsNotNone(bandit)
+        # k can't be changed once set
+        with self.assertRaises(AttributeError):
+            bandit.k = 5
         # These should all fail
         for k in (0, -1, 0.5, '1', 'the', None):
             # with self.subTest(k=k):
@@ -38,6 +41,9 @@ class TestStaticBandit(unittest.TestCase):
         for values in ((1, 2, 3), [1, 2, 3], numpy.array([1, 2, 3]), None):
             bandit = Static(k, values)
             self.assertIsNotNone(bandit)
+        # Once defined, you can't change the rewards
+        with self.assertRaises(AttributeError):
+            bandit.payout = (1, 2, 3)
         # These are all invalid ways
         for values in ((1, 2), ('the', 'it', 4), 4, '1 2 3'):
             with self.assertRaises(ValueError):
