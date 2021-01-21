@@ -44,10 +44,14 @@ class Static(Bandit):
         @return The reward for that arm.
         @raise ValueError Raised if the provided index is not a valid arm.
         """
-        if index < 0 or index >= self.k:
+        reward = None
+        try:
+            assert(index >= 0 and index < self.k)
+            reward = self.rewards[index]
+        except:
             raise ValueError(
                 'Selected arm must be on the range [0, {0:d})'.format(self.k))
-        return self.rewards[index]
+        return reward
 
     def trueValues(self):
         """
