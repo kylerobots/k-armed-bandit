@@ -6,7 +6,7 @@ implementations.
 """
 
 
-class Bandit():
+class Bandit(abc.ABC):
     """
     A base class for the various bandit implementations.
 
@@ -23,6 +23,8 @@ class Bandit():
         integer greater than zero.
         @raise ValueError if k is not an integer greater than zero.
         """
+        if not isinstance(k, int) or k <= 0:
+            raise ValueError('k must be an integer greater than 0.')
         self._k = k
 
     @property
