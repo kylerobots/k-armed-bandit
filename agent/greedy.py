@@ -17,6 +17,8 @@ class Greedy(BaseAgent):
         @param start_value The starting reward to use for each arm. All arms assume the same value at the start.
         """
         super().__init__(k, start_value=start_value)
+        # Track how many selections have been made to use in the update formula.
+        self._n = 0
 
     def act(self) -> int:
         """
@@ -35,4 +37,5 @@ class Greedy(BaseAgent):
         @param action The index corresponding to the action that was taken.
         @param reward The resulting reward that was earned.
         """
-        pass
+        self._n += 1
+        self.table[action] += (reward - self.table[action]) / self._n
