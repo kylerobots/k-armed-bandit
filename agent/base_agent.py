@@ -36,14 +36,6 @@ class BaseAgent(abc.ABC):
         @return An int representing which arm action to take. This int should be between [0, k).
         """
 
-    def explore(self) -> int:
-        """
-        Explore a new action.
-
-        This will select a random action to take from the Q-table, to explore the decision space more.
-        @return An int representing which arm action to take. This int will be between [0, k).
-        """
-
     def exploit(self) -> int:
         """
         Select the best action.
@@ -51,6 +43,17 @@ class BaseAgent(abc.ABC):
         This will use the Q-table to select the action with the highest likelihood. Ties are broken arbitrarily.
         @return An int representing which arm action to take. This int will be between [0, k).
         """
+
+    def explore(self) -> int:
+        """
+        Explore a new action.
+
+        This will select a random action to take from the Q-table, to explore the decision space more.
+        @return An int representing which arm action to take. This int will be between [0, k).
+        """
+        # Just pick a random action. When provided a single value, choice chooses from the range [0, k), so use the
+        # size of the table as the input to choice.
+        return numpy.random.choice(a=self.table.size, size=1)
 
     @property
     def table(self) -> numpy.ndarray:
