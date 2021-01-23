@@ -24,7 +24,7 @@ class BaseAgent(abc.ABC):
         # Create a Q-table with size k.
         if k <= 0:
             raise ValueError('k must be an integer greater than zero.')
-        self.table = start_value * numpy.ones(shape=(k,), dtype=numpy.float)
+        self._table = start_value * numpy.ones(shape=(k,), dtype=numpy.float)
 
     @abc.abstractmethod
     def act(self) -> int:
@@ -59,15 +59,6 @@ class BaseAgent(abc.ABC):
         @return a Numpy array of k elements. the i-th element holds the estimated value for the i-th action/arm.
         """
         return self._table
-
-    @table.setter
-    def table(self, value: numpy.ndarray) -> None:
-        """
-        Set the Q-Table to some value.
-        @param value This should be a numpy vector with k elements. Each element represents the associated estimated
-        value for the equivalent arm on a bandit.
-        """
-        self._table = value
 
     @abc.abstractmethod
     def update(self, action: int, reward: float) -> None:
