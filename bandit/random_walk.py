@@ -1,3 +1,4 @@
+import numpy
 from bandit import Normal
 
 
@@ -19,4 +20,6 @@ class RandomWalk(Normal):
     def select(self, index):
         rewards = super().select(index)
         # Now modify the means.
+        walk_values = numpy.random.normal(loc=0.0, scale=0.01, size=self.k)
+        self._mean += walk_values
         return rewards
