@@ -21,8 +21,11 @@ class Greedy(BaseAgent):
     def act(self) -> int:
         """
         Select an action to take from the available ones.
+
+                Greedy always exploits, so this will always be one of the actions with the highest table value.
+                @return An int representing the selected action. It will be on the interval [0, k).
         """
-        pass
+        return self.exploit()
 
     def update(self, action: int, reward: float) -> None:
         """
