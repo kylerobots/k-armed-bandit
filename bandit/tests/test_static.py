@@ -8,23 +8,6 @@ class TestStaticBandit(unittest.TestCase):
     Test case to test that the static bandit works correctly.
     """
 
-    def test_instantiate_k(self):
-        """
-        Test that the Static bandit properly sets the number of arms. Any
-        positive integer is permitted and everything else is rejected. This
-        mimics real life where you can't have a non-natural number of arms.
-        Zero is explicitly excluded, since it makes the object trivial.
-        """
-        # These values should all work
-        for k in (1, 2, 100):
-            bandit = Static(k, None)
-            self.assertEqual(
-                bandit.k, k, 'Static bandit did not create the correct number of arms.')
-        # These should all fail
-        for k in (0, -1, 0.5, '1', 'the', None):
-            with self.assertRaises(ValueError, 'Static bandit did not reject invalid k input.'):
-                Static(k, None)
-
     def test_instantiate_rewards(self):
         """
         Test that the class can handle reward values. Acceptable values should
