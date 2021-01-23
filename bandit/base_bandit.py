@@ -6,7 +6,7 @@ implementations.
 """
 
 
-class Bandit(abc.ABC):
+class BaseBandit(abc.ABC):
     """
     A base class for the various bandit implementations.
 
@@ -15,7 +15,7 @@ class Bandit(abc.ABC):
     APIs across all of them.
     """
 
-    def __init__(self, k):
+    def __init__(self, k: int) -> None:
         """
         Initialize the object with a set number of arms.
 
@@ -28,9 +28,10 @@ class Bandit(abc.ABC):
         self._k = k
 
     @property
-    def k(self):
+    def k(self) -> int:
         """
         Return the number of arms this bandit has.
+        @return An int greater than or equal to one.
         """
         return self._k
 
@@ -41,9 +42,11 @@ class Bandit(abc.ABC):
 
         When implemented, this method should return the reward obtained when
         selecting the given arm index.
-        @param index The arm to select on the bandit.
+        @param index Some sort of index representation to select which arms to
+        get rewards from. Typically, this will be a single integer or some
+        sort of list, array, etc. of integers.
         """
-        raise NotImplementedError("Subclass does not implement act method.")
+        raise NotImplementedError("Subclass does not implement select method.")
 
     @abc.abstractmethod
     def trueValues(self):
