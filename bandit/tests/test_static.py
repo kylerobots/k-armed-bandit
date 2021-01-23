@@ -1,7 +1,6 @@
-from bandit.Base import Bandit
-import unittest
-from bandit.static import Static
+from bandit import Static
 import numpy
+import unittest
 
 
 class TestStaticBandit(unittest.TestCase):
@@ -61,7 +60,7 @@ class TestStaticBandit(unittest.TestCase):
             with self.assertRaises(Exception, msg='Static bandit did not reject non-numeric rewards'):
                 Static(k, values)
 
-    def test_correctRewards(self):
+    def test_correct_rewards(self):
         """
         Test that the right reward is returned when each arm is selected. This
         should allow any indexing inputs that you could use for numpy arrays

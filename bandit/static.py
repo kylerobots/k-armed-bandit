@@ -1,4 +1,4 @@
-from bandit.base import Bandit
+from bandit import Bandit
 import numpy
 
 
