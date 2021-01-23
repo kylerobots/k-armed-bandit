@@ -21,7 +21,7 @@ class TestStaticBandit(unittest.TestCase):
             with self.subTest(values=values):
                 bandit = Static(k, values)
                 #  Make sure that the stored rewards are what was provided.
-                rewards = bandit.rewards
+                rewards = bandit.trueValues()
                 for i, value in enumerate(values):
                     self.assertEqual(
                         value, rewards[i], 'Stored reward does not match provided.')
