@@ -43,6 +43,15 @@ class BaseAgent(abc.ABC):
         This will use the Q-table to select the action with the highest likelihood. Ties are broken arbitrarily.
         @return An int representing which arm action to take. This int will be between [0, k).
         """
+        # Argmax will return all the highest arguments as an array. If there is only a single highest, argmax will
+        # just return a single value. Otherwise, use choice to pick amongst all the indices.
+        possible_actions = numpy.argmax(a=self.table)
+        if possible_actions.size == 1:
+            selected_action = possible_actions
+        else:
+            # Default of choice is to pick a single value
+            selected_action = numpy.random.choice(a=possible_actions)
+        return selected_action
 
     def explore(self) -> int:
         """
