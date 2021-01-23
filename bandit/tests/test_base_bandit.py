@@ -1,8 +1,8 @@
-from bandit import Bandit
+from bandit import BaseBandit
 import unittest
 
 
-class FakeBandit(Bandit):
+class FakeBandit(BaseBandit):
     """
     This is a fake child class.
 
@@ -22,7 +22,7 @@ class FakeBandit(Bandit):
         pass
 
 
-class TestBandit(unittest.TestCase):
+class TestBaseBandit(unittest.TestCase):
     """
     Tests the base class that all bandits rely on. Since this is an abstract
     class, it uses a simple inheriting class to allow testing of the

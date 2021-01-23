@@ -1,8 +1,8 @@
-from bandit import Bandit
+from bandit import BaseBandit
 import numpy
 
 
-class Static(Bandit):
+class Static(BaseBandit):
     """
     This class implements a bandit with a constant reward value each time
     an arm is chosen.

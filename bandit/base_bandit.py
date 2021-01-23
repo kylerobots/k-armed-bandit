@@ -6,7 +6,7 @@ implementations.
 """
 
 
-class Bandit(abc.ABC):
+class BaseBandit(abc.ABC):
     """
     A base class for the various bandit implementations.
 
