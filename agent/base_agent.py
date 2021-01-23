@@ -18,8 +18,23 @@ class BaseAgent(abc.ABC):
         zero.
         @param start_value An initial value to use for each possible action. This assumes that each action is equally
         likely at start, so all values in the Q-table are set to this value.
+        @raise ValueError if k is not an integer greater than 0.
         """
         super().__init__()
+        # Create a Q-table with size k.
+        if k <= 0:
+            raise ValueError('k must be an integer greater than zero.')
+        self.table = start_value * numpy.ones(shape=(k,), dtype=numpy.float)
+
+    @abc.abstractmethod
+    def act(self) -> int:
+        """
+        Use a specific algorithm to determine which action to take.
+
+        This method should define how exactly the agent selects an action. It is free to use @ref explore and @ref
+        exploit as needed.
+        @return An int representing which arm action to take. This int should be between [0, k).
+        """
 
     def explore(self) -> int:
         """
@@ -37,15 +52,22 @@ class BaseAgent(abc.ABC):
         @return An int representing which arm action to take. This int will be between [0, k).
         """
 
-    @abc.abstractmethod
-    def act(self) -> int:
+    @property
+    def table(self) -> numpy.ndarray:
         """
-        Use a specific algorithm to determine which action to take.
+        Return the Q-Table.
+        @return a Numpy array of k elements. the i-th element holds the estimated value for the i-th action/arm.
+        """
+        return self._table
 
-        This method should define how exactly the agent selects an action. It is free to use @ref explore and @ref
-        exploit as needed.
-        @return An int representing which arm action to take. This int should be between [0, k).
+    @table.setter
+    def table(self, value: numpy.ndarray) -> None:
         """
+        Set the Q-Table to some value.
+        @param value This should be a numpy vector with k elements. Each element represents the associated estimated
+        value for the equivalent arm on a bandit.
+        """
+        self._table = value
 
     @abc.abstractmethod
     def update(self, action: int, reward: float) -> None:

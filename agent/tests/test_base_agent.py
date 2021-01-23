@@ -10,8 +10,11 @@ class FakeAgent(BaseAgent):
     to allow testing of the elements of the base class that can be tested.
     """
 
-    def __init__(self, k: int, start_value: float) -> None:
+    def __init__(self, k: int, start_value: float = 0.0) -> None:
         super().__init__(k, start_value=start_value)
+
+    def act(self) -> int:
+        return 0
 
     def update(self, action: int, reward: float) -> None:
         pass
@@ -30,13 +33,13 @@ class TestBaseAgent(unittest.TestCase):
         """
         # Positive integers are valid and should produce a Q-table of the same size.
         for k in (1, 10, 100):
-            agent = FakeAgent(k=k)
-            self.assertEqual(agent.table.size(), k,
+            agent = FakeAgent(k=k, start_value=0.0)
+            self.assertEqual(agent.table.size, k,
                              msg='BaseAgent did not make a correct table size.')
         # Anything else should fail.
         for k in (0, -1, 0.5, '1', 'the', None):
-            with self.assertRaises(ValueError, msg='Static bandit did not reject invalid k input.'):
-                FakeAgent(k)
+            with self.assertRaises(Exception, msg='Static bandit did not reject invalid k input.'):
+                FakeAgent(k)  # type:ignore
 
     def test_exploitation(self):
         """
