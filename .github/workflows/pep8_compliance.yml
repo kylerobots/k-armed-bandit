@@ -1,0 +1,21 @@
+name: PEP8 Compliance
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: autopep8
+      uses: peter-evans/autopep8@v1
+      with:
+        args: --recursive --in-place --aggressive --aggressive .
+    - name: Create pull request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        commit-message: autopep8 action fixes
+        title: Fixes by autopep8 action
+        body: This is an auto-generated PR with fixes by autopep8
+        labels: Documentation
+        reviewers: kylerobots
