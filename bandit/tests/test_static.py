@@ -15,9 +15,9 @@ class TestStaticBandit(unittest.TestCase):
         element should be numeric. Alternatively, None can be used to have the
         class randomly select values.
         """
-        k = 3
+        k = 4
         # Iterables can include lists, arrays, or numpy arrays, for starters.
-        for values in ((1, 2, 3), [1, 2, 3], numpy.array([1, 2, 3])):
+        for values in ((1, 2, 3, 4), [1, 2, 3, 4], numpy.array([1, 2, 3, 4])):
             with self.subTest(values=values):
                 bandit = Static(k, values)
                 #  Make sure that the stored rewards are what was provided.
@@ -38,8 +38,8 @@ class TestStaticBandit(unittest.TestCase):
         with self.assertRaises(ValueError, msg='Static bandit did not reject incorrect length rewards.'):
             Static(k=3, rewards=(1, 2))
         # Other, non-numeric iterables and data types should produce some form
-        # of error.
-        for values in ((1, 2), ('the', 'it', 4), 4, '1 2 3'):
+        # of error. This includes multi-dimensional numpy arrays.
+        for values in ((1, 2), ('the', 'it', 4, 5), 4, '1 2 3 4', numpy.array([[1, 2], [3, 4]])):
             with self.assertRaises(Exception, msg='Static bandit did not reject non-numeric rewards'):
                 Static(k, values)
 
