@@ -32,12 +32,18 @@ class Normal(BaseBandit):
         Select one or several arms to obtain a reward from.
 
         @param index Any numpy valid indexing method to select which arms
-        a reward should be drawn from.
+        a reward should be drawn from. None can also be passed, but will only
+        return a reward of None.
         @return The rewards. The size of this will depend on the type of index.
         If a single integer is passed in, a single float will be returned.
-        Otherwise, a numpy array will be returned.
+        Otherwise, a numpy array will be returned. If None is passed in, this
+        will also be None.
         """
-        pass
+        if index is None:
+            return None
+        means = self._mean[index]
+        stds = self._std[index]
+        return numpy.random.normal(loc=means, scale=stds)
 
     def trueValues(self):
         """
