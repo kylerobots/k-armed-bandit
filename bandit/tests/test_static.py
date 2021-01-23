@@ -65,10 +65,13 @@ class TestStaticBandit(unittest.TestCase):
             true_rewards[arms], expected_rewards))
         # Additionally, incorrect inputs should be rejected, including indices
         # out of range.
-        for i in (0.5, 10, '1', 'the', None):
+        for i in (0.5, 10, '1', 'the'):
             rewards = bandit.trueValues()
-            with self.assertRaises(ValueError):
-                reward = bandit.select(i)
+            with self.subTest(i=i):
+                with self.assertRaises(Exception, msg='Incorrect indices not rejected.'):
+                    reward = bandit.select(i)
+        # None is a special case and will return None
+        self.assertIsNone(bandit.select(None))
 
 
 if __name__ == '__main__':
