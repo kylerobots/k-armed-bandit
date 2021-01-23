@@ -22,13 +22,14 @@ class TestRandomWalkBandit(unittest.TestCase):
         """
         K = 100
         bandit = RandomWalk(K)
-        (previous_mean, _) = bandit.trueValues()
+        (mean, _) = bandit.trueValues()
+        previous_mean = numpy.copy(mean)
         values_have_changed = False
         # Call select a number of times. As long as it changes at least once,
         # then the method is working.
         for i in range(100):
-            _ = bandit.select(10)
+            _ = bandit.select(0)
             (mean, _) = bandit.trueValues()
             values_have_changed |= not numpy.array_equal(previous_mean, mean)
-            previous_mean = mean
+            previous_mean = numpy.copy(mean)
         self.assertTrue(values_have_changed)
