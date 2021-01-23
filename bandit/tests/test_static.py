@@ -39,7 +39,8 @@ class TestStaticBandit(unittest.TestCase):
             Static(k=3, rewards=(1, 2))
         # Other, non-numeric iterables and data types should produce some form
         # of error. This includes multi-dimensional numpy arrays.
-        for values in ((1, 2), ('the', 'it', 4, 5), 4, '1 2 3 4', numpy.array([[1, 2], [3, 4]])):
+        for values in ((1, 2), ('the', 'it', 4, 5), 4,
+                       '1 2 3 4', numpy.array([[1, 2], [3, 4]])):
             with self.assertRaises(Exception, msg='Static bandit did not reject non-numeric rewards'):
                 Static(k, values)
 
@@ -57,7 +58,9 @@ class TestStaticBandit(unittest.TestCase):
         for arm in (-3, 0, 2, 9):
             expected_reward = bandit.select(arm)
             self.assertEqual(
-                expected_reward, true_rewards[arm], 'Static bandit did not provide a correct reward.')
+                expected_reward,
+                true_rewards[arm],
+                'Static bandit did not provide a correct reward.')
         # It can also accept an iterable type.
         arms = range(k)
         expected_rewards = bandit.select(arms)

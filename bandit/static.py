@@ -30,8 +30,9 @@ class Static(BaseBandit):
             self._rewards = numpy.random.uniform(low=0, high=1, size=self.k)
         else:
             if len(rewards) != self.k:
-                raise ValueError('rewards_value must have a length of {0}, not {1}'.format(
-                    self.k, len(rewards)))
+                raise ValueError(
+                    'rewards_value must have a length of {0}, not {1}'.format(
+                        self.k, len(rewards)))
             self._rewards = numpy.fromiter(rewards, dtype=numpy.float)
 
     @property

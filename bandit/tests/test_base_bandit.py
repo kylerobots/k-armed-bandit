@@ -40,7 +40,9 @@ class TestBaseBandit(unittest.TestCase):
         for k in (1, 2, 100):
             bandit = FakeBandit(k)
             self.assertEqual(
-                bandit.k, k, msg='Static bandit did not create the correct number of arms.')
+                bandit.k,
+                k,
+                msg='Static bandit did not create the correct number of arms.')
         # These should all fail
         for k in (0, -1, 0.5, '1', 'the', None):
             with self.assertRaises(ValueError, msg='Static bandit did not reject invalid k input.'):
