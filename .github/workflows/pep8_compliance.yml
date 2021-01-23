@@ -13,6 +13,9 @@ jobs:
         uses: peter-evans/autopep8@v1
         with:
           args: --exit-code --recursive --in-place --aggressive --aggressive .
+      - name: Set autopep8 branch name
+        id: vars
+        run: echo ::set-output name=branch-name::"autopep8-patches/$GITHUB_HEAD_REF"
       - name: Create pull request
         if: steps.autopep8.outputs.exit-code == 2
         uses: peter-evans/create-pull-request@v3
