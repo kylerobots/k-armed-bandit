@@ -1,3 +1,4 @@
+import numpy
 from agent import BaseAgent
 
 
@@ -24,6 +25,8 @@ class EpsilonGreedy(BaseAgent):
         self.epsilon = epsilon
         # Track how many selections have been made to use in the update formula.
         self._n = 0
+        # Per Numpy documentation, this is the preferred way to sample from random distributions.
+        self._rng = numpy.random.default_rng()
 
     def act(self) -> int:
         """
@@ -33,7 +36,14 @@ class EpsilonGreedy(BaseAgent):
         values at a rate of (1.0 - epsilon).
         @return The index of the selected action to take. Gauranteed to be an int on the range [0, k).
         """
-        pass
+        # Decide if the agent should explore or exploit using epsilon
+        samples = self._rng.binomial(n=1, p=self.epsilon, size=1)
+        should_explore = (samples[0] == 1)
+        if should_explore:
+            action = self.explore()
+        else:
+            action = self.exploit()
+        return action
 
     @property
     def epsilon(self) -> float:
