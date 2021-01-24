@@ -22,6 +22,8 @@ class EpsilonGreedy(BaseAgent):
         """
         super().__init__(k, start_value=start_value)
         self.epsilon = epsilon
+        # Track how many selections have been made to use in the update formula.
+        self._n = 0
 
     def act(self) -> int:
         """
@@ -52,4 +54,5 @@ class EpsilonGreedy(BaseAgent):
         @param action An index representing which action on the table was selected. It must be between [0, k).
         @param reward The reward obtained from this action.
         """
-        pass
+        self._n += 1
+        self.table[action] += (reward - self.table[action]) / self._n
