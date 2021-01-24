@@ -34,10 +34,11 @@ class TestEpsilonGreedy(unittest.TestCase):
         # These values are all valid probabilities.
         for e in (0.0, 0.25, 0.12345, 1.0, 1, 0):
             agent = EpsilonGreedy(10, e, 0.0)
-            self.assertEqual(e, agent.epsilon)
+            self.assertEqual(e, agent.epsilon,
+                             msg='Agent did not store epsilon property.')
         # These are not allowed.
         for e in (-0.01, 100, 1.1, '0.5', (0.0, 0.5, 0.25)):
-            with self.assertRaises(Exception, 'Agent did not reject invalid epsilon inputs.'):
+            with self.assertRaises(Exception, msg='Agent did not reject invalid epsilon inputs.'):
                 agent = EpsilonGreedy(3, e, 0.0)  # type: ignore
 
     def test_update(self):

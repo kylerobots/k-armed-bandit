@@ -21,6 +21,7 @@ class EpsilonGreedy(BaseAgent):
         @raise ValueError if epsilon is not a valid probability (between 0 and 1).
         """
         super().__init__(k, start_value=start_value)
+        self.epsilon = epsilon
 
     def act(self) -> int:
         """
@@ -31,6 +32,17 @@ class EpsilonGreedy(BaseAgent):
         @return The index of the selected action to take. Gauranteed to be an int on the range [0, k).
         """
         pass
+
+    @property
+    def epsilon(self) -> float:
+        return self._epsilon
+
+    @epsilon.setter
+    def epsilon(self, value: float) -> None:
+        if value < 0.0 or value > 1.0:
+            raise ValueError(
+                'Epsilon must be a valid probability, so between 0 and 1 (inclusive)!')
+        self._epsilon = value
 
     def update(self, action: int, reward: float) -> None:
         """
