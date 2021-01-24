@@ -21,27 +21,42 @@ N = 2000
 M = 1000
 
 # Create the bandit and agents. Use several different epsilon values.
-test_bandits = []
+bandits = []
 for i in range(N):
-    test_bandit = bandit.Normal(k=K)
-    test_bandits.append(test_bandit)
-test_agents = [
+    single_bandit = bandit.Normal(k=K)
+    bandits.append(single_bandit)
+agents = [
     agent.Greedy(k=K),
     agent.EpsilonGreedy(k=K, epsilon=0.01),
-    agent.EpsilonGreedy(k=K, epsilon=0.1)
+    agent.EpsilonGreedy(k=K, epsilon=0.1),
+]
+agent_names = [
+    '0.0',
+    '0.01',
+    '0.1',
 ]
 
-rewards = numpy.zeros(shape=(M,))
-test_bandit = bandit.Normal(k=K)
-test_agent = agent.EpsilonGreedy(k=K, epsilon=0.01)
-cumulative_mean_reward = 0.0
-for m in range(M):
-    action = test_agent.act()
-    reward = test_bandit.select(index=action)
-    test_agent.update(action=action, reward=reward)  # type: ignore
-    # Use a cumulative mean formula
-    cumulative_mean_reward += (reward - cumulative_mean_reward) / (m + 1)
-    rewards[m] = cumulative_mean_reward
+rewards = numpy.zeros(shape=(len(agents), N, M), dtype=numpy.float)
+for i, test_agent in enumerate(agents):
+    # Iterate through each sample trial
+    for n in range(N):
+        # Reset the Q-table. Typically, this is a private property and shouldn't be modified this way, but a reset
+        # feature is not available.
+        test_agent._table = numpy.zeros_like(a=test_agent.table)
+        cumulative_mean_reward = 0.0
+        # Select actions the appropriate number of times
+        for m in range(M):
+            action = test_agent.act()
+            reward = bandits[n].select(index=action)
+            test_agent.update(action=action, reward=reward)
+            cumulative_mean_reward += (reward -
+                                       cumulative_mean_reward) / (m + 1)
+            rewards[i, n, m] = cumulative_mean_reward
 
-matplotlib.pyplot.plot(rewards)
+# Once all trials are complete, average across the N bandits to get the average performance for each agent at each
+# iteration
+mean_rewards = numpy.mean(a=rewards, axis=1)
+for i, agent_name in enumerate(agents):
+    matplotlib.pyplot.plot(mean_rewards[i])
+matplotlib.pyplot.legend(agent_names)
 matplotlib.pyplot.show()
