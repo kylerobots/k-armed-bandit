@@ -1,9 +1,4 @@
 import abc
-""" @package docstring
-This package provides several k-Armed Bandit implementations with different
-features. It also includes a base class to allow creation of new
-implementations.
-"""
 
 
 class BaseBandit(abc.ABC):

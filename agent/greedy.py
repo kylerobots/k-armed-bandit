@@ -24,8 +24,8 @@ class Greedy(BaseAgent):
         """
         Select an action to take from the available ones.
 
-                Greedy always exploits, so this will always be one of the actions with the highest table value.
-                @return An int representing the selected action. It will be on the interval [0, k).
+        Greedy always exploits, so this will always be one of the actions with the highest table value.
+        @return An int representing the selected action. It will be on the interval [0, k).
         """
         return self.exploit()
 
