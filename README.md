@@ -1,6 +1,7 @@
 # k-Armed-Bandit
 
 See full documentation at https://kylerobots.github.io/k-armed-bandit/
+Source code can be found at https://github.com/kylerobots/k-armed-bandit
 
 Implementation of the k-Armed Bandit reinforcement learning problem and associated solvers. This is inspired by Chapter
 2 of [**Reinforcement Learning: An Introduction**](http://incompleteideas.net/book/the-book.html) by Sutton and Barto.
