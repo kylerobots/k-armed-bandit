@@ -20,7 +20,7 @@ class Static(BaseBandit):
         each arm.
         @param k An int greater than or equal to one representing the number
         of arms this bandit has.
-        @param reward_values If provided, the fixed reward for each arm. It can
+        @param rewards If provided, the fixed reward for each arm. It can
         be a list, array, numpy array, or any sort of iterable object, but must
         have a length equal to k. It can also be None to let the bandit pick
         random rewards from the interval [0, 1).
