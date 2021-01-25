@@ -18,7 +18,7 @@ class BaseAgent(abc.ABC):
         zero.
         @param start_value An initial value to use for each possible action. This assumes that each action is equally
         likely at start, so all values in the Q-table are set to this value.
-        @raise ValueError if k is not an integer greater than 0.
+        @exception ValueError if k is not an integer greater than 0.
         """
         super().__init__()
         # Create a Q-table with size k.

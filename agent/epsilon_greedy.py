@@ -19,7 +19,7 @@ class EpsilonGreedy(BaseAgent):
         @param epsilon The rate at which actions should randomly explore. As this is a probability, it should be between
         0 and 1.
         @param start_value The initial value to use in the table. All actions start with the same value.
-        @raise ValueError if epsilon is not a valid probability (between 0 and 1).
+        @exception ValueError if epsilon is not a valid probability (between 0 and 1).
         """
         super().__init__(k, start_value=start_value)
         self.epsilon = epsilon

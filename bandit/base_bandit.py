@@ -21,7 +21,7 @@ class BaseBandit(abc.ABC):
 
         @param k The number of arms this bandit should have. This must be an
         integer greater than zero.
-        @raise ValueError if k is not an integer greater than zero.
+        @exception ValueError if k is not an integer greater than zero.
         """
         if not isinstance(k, int) or k <= 0:
             raise ValueError('k must be an integer greater than 0.')
